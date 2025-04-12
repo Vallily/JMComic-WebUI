@@ -15,8 +15,6 @@
 
 1.  **安装 JMComic 爬虫 API:**  请务必先按照 [JMComic-Crawler-Python](https://github.com/hect0x7/JMComic-Crawler-Python/) 的说明进行安装和配置。这是本项目运行的基础。
 
-    [https://github.com/hect0x7/JMComic-Crawler-Python/](https://github.com/hect0x7/JMComic-Crawler-Python/)
-
 2.  **运行 WebUI:**
 
     *   下载本项目代码。
@@ -31,7 +29,7 @@
     *   输入本子 ID  并按 Enter，将本子添加到预选库。
     *   点击 "获取本子信息"，等待信息加载完成。
     *   选中要下载的本子。
-    *   点击 "下载"。
+    *   点击 "下载"，将会默认下载到./Archive文件夹。
 
 *   **搜索本子界面:**
     *   输入搜索关键词。
@@ -42,6 +40,7 @@
 *   **本子库界面:**
     *   点击本子卡片进入预览模式 (左键单击空白处退出)。
     *   在预览模式下，点击图片可以打开大图显示 (单击图片退出，使用 ← 和 → 键进行图片切换)。
+    *   可以使用资源管理器进行文件夹分类嵌套，本子库能识别文件夹和本子（WebUI的资源管理器功能暂未实现）
 
 ## 声明
 
