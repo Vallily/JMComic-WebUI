@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>JMComic 漫画下载</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>JMComic 漫画下载</h1>
+    <div class="tab">
+        <button class="tablinks" data-tab="Download">本子下载</button>
+        <button class="tablinks" data-tab="Search">本子搜索</button>
+        <button class="tablinks" data-tab="Settings">设置</button>
+        <button class="tablinks tablinks-library" data-tab="Library" id="defaultOpen">本子库</button>
+    </div>
+    <div id="Download" class="tabcontent">
+        <h2 class="tab-title">本子下载</h2>
+        <div class="input-container">
+            <label for="album_id">本子 ID（多个ID以英文逗号分隔）</label>
+            <input type="text" id="album_id" name="album_id" placeholder="输入 ID 按 Enter">
+        </div>
+        <div id="id-preview-container">
+            <h3>预选 ID（单击删除）:</h3>
+            <div id="id-preview">
+                <!-- ID 标签将通过 JavaScript 动态添加 -->
+            </div>
+        </div>
+        <!-- 添加全选/全不选按钮 -->
+        <div class="select-all-buttons">
+            <button id="select-all-download" class="styled-button small">全选</button>
+            <button id="select-none-download" class="styled-button small">全不选</button>
+        </div>
+        <div id="album-info-list">
+            <!-- 本子信息将通过 JavaScript 加载 -->
+        </div>
+        <div class="button-container">
+            <button id="get-album-info-button" class="styled-button">获取本子信息</button>
+            <button id="download-button" class="styled-button">下载本子</button>
+        </div>
+        <div id="selected-count"></div> <!-- 添加统计数量的元素 -->
+    </div>
+    <div id="Search" class="tabcontent">
+        <h2 class="tab-title">本子搜索</h2>
+        <div class="input-container">
+            <label for="search_query">搜索本子</label>
+            <div class="search-input-group">
+                <input type="text" id="search_query" name="search_query" placeholder="输入搜索关键词">
+                <button id="search-button" class="styled-button">搜索</button>
+            </div>
+        </div>
+        <!-- 添加加载提示信息 -->
+        <div id="loading-message" style="display:none; text-align: center; margin-bottom: 10px;">
+            正在搜索，请稍候...
+        </div>
+        <!-- 添加全选/全不选按钮 -->
+        <div class="select-all-buttons">
+            <button id="select-all-search" class="styled-button small">全选</button>
+            <button id="select-none-search" class="styled-button small">全不选</button>
+        </div>
+        <div id="search-results-list">
+            <!-- 搜索结果将通过 JavaScript 加载 -->
+        </div>
+        <!-- 添加分页容器 -->
+        <div id="pagination" class="pagination-container"></div>
+        <!-- 在搜索页面添加统计数量的元素 -->
+        <div id="search-selected-count"></div>
+        <div class="button-container">
+            <button id="add-to-preview-button" class="styled-button">添加到预选库</button>
+        </div>
+    </div>
+    
+    <div id="Library" class="tabcontent">
+        <div id="archive-list">
+            <!-- 本子库内容将通过 JavaScript 加载 -->
+        </div>
+    </div>
+    
+    <div id="Settings" class="tabcontent">
+        <h2 class="tab-title">设置</h2>
+        <p>这里放设置相关的内容...</p>
+    </div>
+
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="module" src="{{ url_for('static', filename='script.js') }}"></script>
+    
+</body>
+</html>

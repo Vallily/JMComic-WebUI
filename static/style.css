@@ -1,0 +1,585 @@
+/* static/style.css */
+
+/* 引入 Google Fonts 字体 */
+@import url('https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@300;400;500;700&display=swap');
+
+body {
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+    background-image: url('./img/background.png');
+    background-size: 120% auto;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    color: #fff;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    position: relative;
+}
+
+/* 标题栏样式 */
+h1 {
+    background-color: rgba(73, 80, 87, 0.3);
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+    margin: 0;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    font-size: 2.5em;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    width: 100%;
+    backdrop-filter: blur(5px);
+    filter: brightness(1.1);
+}
+
+/* 标签页样式 */
+.tab {
+    overflow: hidden;
+    background-color: rgba(73, 80, 87, 0.3);
+    border-radius: 10px;
+    margin: 20px auto;
+    max-width: 900px;
+    width: 50%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.tab button {
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+    color: #fff;
+    font-size: 1em;
+}
+
+.tab button:hover {
+    background-color: rgba(90, 98, 104, 0.5);
+}
+
+.tab button.active {
+    background-color: rgba(52, 58, 64, 0.7);
+}
+
+.tabcontent {
+    display: none;
+    padding: 20px;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 1800px;
+    margin: 0 auto;
+    backdrop-filter: blur(8px);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    filter: brightness(1.1);
+}
+
+/* 标签内容标题样式 */
+.tab-title {
+    text-align: center;
+    color: #fff;
+    margin-bottom: 20px;
+}
+
+/* 输入框样式 */
+.input-container {
+    margin-top: 20px;
+    text-align: center;
+}
+.input-container label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 1.2em;
+    color: #b6c6d6;
+    /* 柔和的发光文字效果 */
+    text-shadow: 0 0 2px #512e6b,0 0 4px #6486a1,0 0 6px #6486a1,0 0 8px #6486a1
+}
+
+
+.input-container input[type="text"] {
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+    width: 70%;
+    max-width: 400px;
+    background-color: rgba(90, 98, 104, 0.3);
+    color: #fff;
+    font-size: 1em;
+    outline: none;
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* 预选 ID 容器样式 */
+#id-preview-container {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: rgba(90, 98, 104, 0.2);  /* 修改背景 */
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    max-width: 900px;
+    width: 90%;
+    margin: 20px auto;
+    backdrop-filter: blur(5px);
+    overflow: hidden;
+    position: relative;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+}
+#id-preview-container h3 {
+    margin-top: 0;
+    font-size: 1.3em;
+    color: #b6c6d6; /* 修改颜色 */
+    text-shadow: 0 0 2px #512e6b, 0 0 4px #6486a1, 0 0 6px #6486a1, 0 0 8px #6486a1; /* 修改发光效果 */
+}
+#id-preview {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+.id-tag {
+    background-color: rgba(0, 123, 255, 0.7);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 8px;
+    position: relative;
+    display: inline-block;
+    font-size: 0.9em;
+    backdrop-filter: blur(5px);
+    cursor: pointer; /* 添加鼠标指针样式 */
+}
+.id-tag:hover {
+    background-color: rgba(0, 86, 179, 0.7);
+}
+/* 隐藏移除 ID 按钮 */
+.id-tag .remove-id {
+    display: none;
+}
+/* 标签内容标题样式 */
+.tab-title {
+    text-align: center;
+    color: #b6c6d6;
+    margin-bottom: 20px;
+    font-size: 2em;  /* 增大字体 */
+    text-shadow: 0 0 2px #512e6b, 0 0 4px #6486a1, 0 0 6px #6486a1, 0 0 8px #6486a1
+}
+
+/* 按钮容器样式 */
+.button-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px 0;
+    margin-top: 20px;
+    backdrop-filter: blur(5px);
+}
+
+/* 按钮样式 */
+.styled-button {
+    background: linear-gradient(to right, rgba(0, 123, 255, 0.7), rgba(102, 16, 242, 0.7));
+    color: #fff;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(5px);
+}
+
+.styled-button:hover {
+    background: linear-gradient(to right, rgba(0, 86, 179, 0.7), rgba(76, 0, 224, 0.7));
+}
+
+/* 本子信息列表样式 */
+#album-info-list {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: rgba(90, 98, 104, 0.2);
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    max-width: 1400px;
+    width: 90%;
+    min-width: 1000px;
+    margin: 20px auto;
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    backdrop-filter: blur(5px);
+    overflow: hidden;
+    position: relative;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+/* 清除浮动，防止高度塌陷 */
+#album-info-list::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+/* 渐变背景覆盖层 */
+#album-info-list::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to bottom, rgba(73, 80, 87, 0.2), transparent);
+    border-radius: 13px;
+    z-index: 0;
+    backdrop-filter: blur(5px);
+}
+
+/* 本子信息样式 */
+.album-info {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 15px;
+    margin-bottom: 15px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 1;
+    width: calc(50% - 20px);
+    box-sizing: border-box;
+    cursor: pointer;
+    margin: 10px;
+    float: left;
+    backdrop-filter: blur(5px);
+    transition: background-color 0.3s ease; /* 添加背景颜色过渡 */
+    overflow: hidden; /* 确保伪元素不超出边界 */
+}
+
+.album-info:hover {
+    transform: scale(1.03);
+}
+
+/* 蓝色背景 */
+.album-info.blue {
+    background-color: rgba(0, 123, 255, 0.7); /* 与渐变色最左侧相同的颜色 */
+}
+
+/* 渐变侵入 */
+.album-info.gradient {
+    background: linear-gradient(to right, rgba(0, 123, 255, 0.7), rgba(102, 16, 242, 0.7)); /* 完整渐变 */
+}
+
+/* 选中状态 */
+.album-info.selected {
+    /* background: linear-gradient(to right, rgba(0, 123, 255, 0.7), rgba(102, 16, 242, 0.7)); */ /* 使用渐变色 */
+    color: #fff; /* 确保文字颜色是白色 */
+}
+
+.album-info h3 {
+    margin-top: 0;
+    font-size: 1.2em;
+    color: #fff;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    margin-bottom: 10px;
+    text-align: center;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.album-info img {
+    width: 120px;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-right: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    flex-shrink: 0;
+    float: left;
+}
+
+.album-info p {
+    margin: 5px 0;
+    color: #eee;
+}
+
+.album-info .info-list {
+    float: left;
+    width: calc(100% - 135px);
+}
+
+/* 统计数量样式 */
+#selected-count,
+#search-selected-count {
+    text-align: center;
+    margin-top: 10px;
+    color: #b6c6d6;
+    font-size: 1.1em;
+    text-shadow: 0 0 2px #512e6b, 0 0 4px #6486a1, 0 0 6px #6486a1, 0 0 8px #6486a1;
+    width: 100%;
+}
+
+/*------------------------以下内容是搜索页面-----------------------*/
+/* 搜索输入框组样式 */
+.search-input-group {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* 将子元素水平居中 */
+}
+
+.search-input-group input[type="text"] {
+    width: 60%; /* 调整输入框宽度 */
+    max-width: 600px; /* 限制最大宽度 */
+    margin-right: 10px; /* 与按钮保持间距 */
+}
+
+/* 搜索结果列表样式 */
+#search-results-list {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: rgba(90, 98, 104, 0.2);
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    max-width: 1400px;
+    width: 90%;
+    min-width: 1000px;
+    margin: 20px auto;
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    backdrop-filter: blur(5px);
+    overflow: hidden;
+    position: relative;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+/* 搜索结果卡片样式 */
+.search-result-item {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 15px;
+    margin-bottom: 15px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 1;
+    width: calc(50% - 20px);
+    box-sizing: border-box;
+    cursor: pointer;
+    margin: 10px;
+    float: left;
+    backdrop-filter: blur(5px);
+    transition: background-color 0.3s ease; /* 添加背景颜色过渡 */
+    overflow: hidden; /* 确保伪元素不超出边界 */
+    text-align: center;
+}
+
+.search-result-item h3 {
+    margin-top: 0;
+    font-size: 1.2em;
+    color: #fff;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    margin-bottom: 10px;
+    text-align: center;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+/* 蓝色背景 */
+.search-result-item.blue {
+    background-color: rgba(0, 123, 255, 0.7); /* 与渐变色最左侧相同的颜色 */
+}
+
+/* 渐变侵入 */
+.search-result-item.gradient {
+    background: linear-gradient(to right, rgba(0, 123, 255, 0.7), rgba(102, 16, 242, 0.7)); /* 完整渐变 */
+}
+
+/* 选中状态 */
+.search-result-item.selected {
+    /* background: linear-gradient(to right, rgba(0, 123, 255, 0.7), rgba(102, 16, 242, 0.7)); */ /* 使用渐变色 */
+    color: #fff; /* 确保文字颜色是白色 */
+}
+
+/* 分页容器样式 */
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+/* 分页按钮样式 */
+.pagination-container button {
+    background-color: rgba(73, 80, 87, 0.3);
+    border: none;
+    color: #fff;
+    padding: 8px 12px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 4px;
+    margin: 0 5px;
+    transition: background-color 0.3s ease;
+}
+.pagination-container button:hover {
+    background-color: rgba(90, 98, 104, 0.5);
+}
+.pagination-container button.active {
+    background-color: rgba(52, 58, 64, 0.7);
+}
+
+
+/* 全选/全不选按钮容器 */
+.select-all-buttons {
+    display: flex;
+    justify-content: flex-end; /* 靠右对齐 */
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding-right: 20px; /* 调整与右侧的距离 */
+}
+/* 小型按钮样式 */
+.styled-button.small {
+    padding: 5px 10px; /* 调整内边距 */
+    font-size: 0.9em; /* 调整字体大小 */
+    margin-left: 5px; /* 调整按钮之间的距离 */
+}
+
+/*-------------------------------------本子库--------------------------------------------*/
+/* 本子库容器样式 */
+.archive-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 20px;
+    gap: 20px;
+}
+
+/* 本子卡片样式 */
+.archive-card {
+    width: 200px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    display: flex; /* 使用 Flexbox 布局 */
+    flex-direction: column; /* 垂直排列 */
+}
+
+.archive-card:hover {
+    transform: scale(1.05);
+}
+
+.archive-card img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.archive-card h3 {
+    font-size: 1.1em;
+    margin: 0;
+    color: #fff;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* 显示两行 */
+    -webkit-box-orient: vertical;
+    word-break: break-word; /* 允许在单词内部换行 */
+}
+
+.archive-card-content {
+    display: flex;
+    flex-direction: column; /* 垂直排列 */
+    align-items: center; /* 水平居中 */
+}
+
+.archive-card-content img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.archive-card-content h3 {
+    font-size: 1.1em;
+    margin: 0;
+    color: #fff;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* 显示两行 */
+    -webkit-box-orient: vertical;
+    word-break: break-word; /* 允许在单词内部换行 */
+    text-align: center;
+}
+
+
+
+/* 阅读模式选择器样式 */
+.reading-mode-selector {
+    text-align: center;
+    margin-bottom: 10px;
+}
+.reading-mode-selector label {
+    margin-right: 10px;
+    font-size: 1.1em;
+    color: #b6c6d6;
+    text-shadow: 0 0 2px #512e6b, 0 0 4px #6486a1, 0 0 6px #6486a1, 0 0 8px #6486a1;
+}
+.reading-mode-selector select {
+    padding: 8px;
+    border-radius: 8px;
+    border: none;
+    background-color: rgba(90, 98, 104, 0.3);
+    color: #fff;
+    font-size: 1em;
+    outline: none;
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    cursor: pointer;
+}
+
+.path-display {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    /* 修改 justifyContent 属性 */
+    justify-content: flex-start;
+}
+
+.path-display #current-path {
+    font-style: italic;
+    margin-right: 10px; /* 路径和按钮之间增加一些间距 */
+}
+
+/* "打开文件夹" 按钮靠右 */
+.path-display #open-folder-button {
+    margin-left: auto; /* 将 "打开文件夹" 按钮推到最右边 */
+}
+
+.styled-button.small {
+    padding: 5px 10px;
+    font-size: 0.8em;
+}

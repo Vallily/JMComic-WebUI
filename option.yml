@@ -1,0 +1,7 @@
+dir_rule: # 下载路径规则
+  base_dir: .\Archive
+
+download:
+  image:
+    decode: true
+    suffix: .jpg # 转为jpg格式的图片
