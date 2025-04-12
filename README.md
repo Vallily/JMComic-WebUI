@@ -59,7 +59,7 @@
 
 ### JMComic爬虫
 
-<a href="[https://github.com/tonquer/JMComic-q](https://github.com/hect0x7/JMComic-Crawler-Python/)">
+<a href="[https://github.com/hect0x7/JMComic-Crawler-Python](https://github.com/hect0x7/JMComic-Crawler-Python/)">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="https://github-readme-stats.vercel.app/api/pin/?username=hect0x7&repo=JMComic-Crawler-Python&theme=radical" />
     <source media="(prefers-color-scheme: light)" srcset="https://github-readme-stats.vercel.app/api/pin/?username=hect0x7&repo=JMComic-Crawler-Python" />
