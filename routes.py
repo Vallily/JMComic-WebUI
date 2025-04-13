@@ -6,7 +6,8 @@ from config import OPTION_PATH
 import threading
 import os
 import shutil
-import subprocess  # 导入 subprocess 模块
+import subprocess
+import time
 
 bp = Blueprint('main', __name__)
 
@@ -62,7 +63,7 @@ def get_image_list_api():
     image_path = request.args.get('image_path')
     abs_path = os.path.join(os.getcwd(), image_path) # 使用绝对路径
     try:
-        image_list = [f for f in os.listdir(abs_path) if f.endswith(('.jpg', '.jpeg', '.png', '.gif'))]
+        image_list = [f for f in os.listdir(abs_path) if f.endswith(('.jpg', '.jpeg', '.png', '.gif', 'webp'))]
         return jsonify(image_list)
     except Exception as e:
         return jsonify({'error': str(e)})
@@ -91,7 +92,14 @@ def delete_archive_api():
     if not archive_name:
         return jsonify({'success': False, 'error': '缺少 archive_name 参数'}), 400
 
-    ARCHIVE_PATH = os.path.join('Archive', archive_name)
+    # 添加输出检测 archive_name 的值
+    print(f"待删除的本子名称 (archive_name): {archive_name}")
+
+    ARCHIVE_PATH = archive_name
+
+    # 添加输出检测 ARCHIVE_PATH 的值
+    print(f"待删除的本子路径 (ARCHIVE_PATH): {ARCHIVE_PATH}")
+
     if not os.path.exists(ARCHIVE_PATH):
         return jsonify({'success': False, 'error': '本子不存在'}), 404
 
@@ -100,6 +108,7 @@ def delete_archive_api():
         return jsonify({'success': True, 'message': '删除成功'})
     except Exception as e:
         return jsonify({'success': False, 'error': str(e)}), 500
+
 
 #--------------------------本子库文件夹系统 获取文件目录并筛选---------------------
 @bp.route('/get_directory_info_api')
@@ -113,19 +122,24 @@ def get_directory_info_api():
         items = []
         for name in os.listdir(abs_path):
             item_path = os.path.join(abs_path, name)
-            item_rel_path = os.path.join(path, name) # 相对路径，用于前端导航
+            item_rel_path = os.path.join(path, name)  # 相对路径，用于前端导航
+            # 将 Windows 路径分隔符替换为正斜杠
+            item_rel_path = item_rel_path.replace('\\', '/')
             if os.path.isdir(item_path):
                 # 检测文件夹中是否存在图片
                 has_images = any(f.endswith(('.jpg', '.jpeg', '.png', '.gif', 'webp')) for f in os.listdir(item_path))
                 item_type = 'album' if has_images else 'folder'
+                # 获取创建时间
+                creation_time = os.path.getctime(item_path)
                 items.append({
                     'name': name,
                     'type': item_type,
-                    'path': item_rel_path  # 相对路径
+                    'path': item_rel_path,  # 相对路径
+                    'creation_time': creation_time  # 添加创建时间
                 })
     except Exception as e:
         return jsonify({'error': str(e)}), 500
-    return jsonify({'items': items, 'path': path}) # 返回当前路径
+    return jsonify({'items': items, 'path': path})  # 返回当前路径
 
 @bp.route('/open_folder_api', methods=['POST'])
 def open_folder_api():

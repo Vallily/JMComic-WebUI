@@ -6,7 +6,7 @@
 body {
     font-family: 'M PLUS Rounded 1c', sans-serif;
     background-image: url('./img/background.png');
-    background-size: 120% auto;
+    background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -19,6 +19,7 @@ body {
     min-height: 100vh;
     position: relative;
 }
+
 
 /* 标题栏样式 */
 h1 {
@@ -537,18 +538,18 @@ h1 {
 
 
 
-/* 阅读模式选择器样式 */
-.reading-mode-selector {
+/* 模式选择器样式 */
+.mode-selector {
     text-align: center;
     margin-bottom: 10px;
 }
-.reading-mode-selector label {
-    margin-right: 10px;
+.mode-selector label {
+    margin-right: 5px;
     font-size: 1.1em;
     color: #b6c6d6;
     text-shadow: 0 0 2px #512e6b, 0 0 4px #6486a1, 0 0 6px #6486a1, 0 0 8px #6486a1;
 }
-.reading-mode-selector select {
+.mode-selector select {
     padding: 8px;
     border-radius: 8px;
     border: none;
@@ -559,6 +560,7 @@ h1 {
     backdrop-filter: blur(5px);
     border: 1px solid rgba(255, 255, 255, 0.1);
     cursor: pointer;
+    margin-right: 16px;
 }
 
 .path-display {

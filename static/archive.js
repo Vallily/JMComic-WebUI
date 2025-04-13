@@ -15,7 +15,7 @@ function loadArchive(path = './Archive') { // 添加path参数，可以指定加
     pathDisplayDiv.classList.add('path-display');
     pathDisplayDiv.innerHTML = `
         <span id="current-path">${path}</span>
-        <button id="back-button" class="styled-button small">⬆️</button>
+        <span id="back-button" style="cursor: pointer; font-size: 1.2em;">⬆️</span>  <!-- 修改：使用span显示emoji -->
         <button id="open-folder-button" class="styled-button small">打开文件夹</button>
     `;
     archiveContent.appendChild(pathDisplayDiv);
@@ -52,30 +52,41 @@ function loadArchive(path = './Archive') { // 添加path参数，可以指定加
     });
 
     // 返回按钮事件
-    document.getElementById('back-button').addEventListener('click', () => {
+    document.getElementById('back-button').addEventListener('click', () => {  // 修改：事件监听器绑定到 span 上
         const parentPath = getParentPath(currentPath);
         loadArchive(parentPath);
     });
 
-    // 创建阅读模式选择器
-    const readingModeSelectorDiv = document.createElement('div');
-    readingModeSelectorDiv.classList.add('reading-mode-selector');
-    readingModeSelectorDiv.innerHTML = `
+    // 创建包含排序和阅读模式选择器的 div
+    const selectorDiv = document.createElement('div');
+    selectorDiv.classList.add('mode-selector');
+    selectorDiv.innerHTML = `
+        <label>排序方式：</label>
+        <select id="sorting-mode">
+            <option value="name">名称排序</option>
+            <option value="time">时间排序</option>
+        </select>
         <label>阅读模式：</label>
         <select id="reading-mode">
             <option value="single">单页模式</option>
             <option value="double">双页模式</option>
             <option value="manga">日漫模式</option>
+            <option value="vertical">垂直模式</option>
         </select>
     `;
-    archiveContent.appendChild(readingModeSelectorDiv);
+    archiveContent.appendChild(selectorDiv);
+    console.log("selectorDiv:", selectorDiv);
+
+    // 从 localStorage 加载排序方式
+    const savedSortingMode = localStorage.getItem('sortingMode') || 'name';  // 默认按名称排序
+    const sortingModeSelector = selectorDiv.querySelector('#sorting-mode');
+    console.log("sortingModeSelector:", sortingModeSelector);
+    sortingModeSelector.value = savedSortingMode;
 
     // 从 localStorage 加载阅读模式
-    const savedReadingMode = localStorage.getItem('readingMode');
-    if (savedReadingMode) {
-        const readingModeSelector = readingModeSelectorDiv.querySelector('#reading-mode');
-        readingModeSelector.value = savedReadingMode;
-    }
+    const savedReadingMode = localStorage.getItem('readingMode') || 'single';// 默认单页模式
+    const readingModeSelector = selectorDiv.querySelector('#reading-mode');
+    readingModeSelector.value = savedReadingMode;
 
     // 添加加载中的提示
     const loadingMessage = document.createElement('p');
@@ -89,7 +100,7 @@ function loadArchive(path = './Archive') { // 添加path参数，可以指定加
             archiveContent.innerHTML = ''; // 清空加载提示
 
             archiveContent.appendChild(pathDisplayDiv); // 重新添加路径显示
-            archiveContent.appendChild(readingModeSelectorDiv); // 重新添加阅读模式选择器
+            archiveContent.appendChild(selectorDiv); // 重新添加排序方式选择器
 
             // 重新应用样式
             const currentPathSpan = document.getElementById('current-path');
@@ -112,15 +123,50 @@ function loadArchive(path = './Archive') { // 添加path参数，可以指定加
                 return;
             }
 
+            // 分别筛选出文件夹和本子
+            const folders = items.filter(item => item.type === 'folder');
+            const albums = items.filter(item => item.type === 'album');
+
+            // 获取排序方式
+            const sortingMode = localStorage.getItem('sortingMode') || 'name';
+
+            // 定义排序函数
+            const sortFunction = (a, b) => {
+                if (sortingMode === 'name') {
+                    return a.name.localeCompare(b.name);
+                } else if (sortingMode === 'time') {
+                    return b.creation_time - a.creation_time; // 注意顺序，时间越晚的排在前面
+                }
+                return 0;
+            };
+
+            // 对文件夹和本子分别进行排序
+            folders.sort(sortFunction);
+            albums.sort(sortFunction);
+
             // 创建一个容器来存放所有本子卡片
             const archiveContainer = document.createElement('div');
             archiveContainer.classList.add('archive-container');
             archiveContent.appendChild(archiveContainer);
 
-            items.forEach(item => {
-                // 创建本子卡片
+            // 先添加文件夹卡片
+            folders.forEach(item => {
                 const archiveCard = createArchiveCard(item);
                 archiveContainer.appendChild(archiveCard);
+            });
+
+            // 再添加本子卡片
+            albums.forEach(item => {
+                const archiveCard = createArchiveCard(item);
+                archiveContainer.appendChild(archiveCard);
+            });
+
+            // 添加排序方式选择器的事件监听器
+            sortingModeSelector.addEventListener('change', function() {
+                const selectedMode = this.value;
+                console.log("选择的排序方式：", selectedMode);
+                localStorage.setItem('sortingMode', selectedMode);  // 保存到 localStorage
+                loadArchive(currentPath);  // 重新加载本子库
             });
 
             // 添加阅读模式选择器的事件监听器
@@ -132,13 +178,21 @@ function loadArchive(path = './Archive') { // 添加path参数，可以指定加
                     localStorage.setItem('readingMode', selectedMode);  // 保存到 localStorage
                 });
             }
+
+            // 添加垂直模式宽度监听器
+            const verticalModeWidthSelector = archiveContent.querySelector('#vertical-mode-width');
+            if (verticalModeWidthSelector) {
+                verticalModeWidthSelector.addEventListener('change', function() {
+                    const selectedWidth = this.value;
+                    console.log("选择的垂直模式宽度：", selectedWidth);
+                    localStorage.setItem('verticalModeImageWidth', selectedWidth);  // 保存到 localStorage
+                });
+            }
         })
         .catch(error => {
             archiveContent.innerHTML = `<p>加载本子库失败。</p>`;
         });
 }
-
-
 
 function createArchiveCard(item) {
     const archiveCard = document.createElement('div');
@@ -190,8 +244,6 @@ function createArchiveCard(item) {
     return archiveCard;
 }
 
-
-
 // 修改：异步查找封面图片的函数
 async function findCoverImage(archiveName) {
     try {
@@ -201,6 +253,7 @@ async function findCoverImage(archiveName) {
             throw new Error(data.error);
         }
         const imageList = data;
+        //console.log("寻找封面图片中，list=", imageList);
         const coverImageName = imageList.find(imageName => /^(00000|00001|00002|00003|00004|00005|00006|00007|00008|00009|00010)\.(jpg|jpeg|png|webp|gif)$/i.test(imageName));
         if (coverImageName) {
             return coverImageName;
@@ -213,9 +266,15 @@ async function findCoverImage(archiveName) {
     }
 }
 
+
 // 获取阅读模式选择器
 const readingModeSelector = document.getElementById('reading-mode');
 function openArchivePreview(archiveName) {
+    console.log("archive name = ", archiveName);
+    // 获取阅读模式和垂直模式宽度
+    const savedReadingMode = localStorage.getItem('readingMode') || 'single'; // 默认值为 'single'
+    const verticalModeImageWidth = localStorage.getItem('verticalModeImageWidth') || '800';
+
     // 创建预览容器
     const previewContainer = document.createElement('div');
     previewContainer.id = 'archivePreviewContainer';
@@ -232,6 +291,7 @@ function openArchivePreview(archiveName) {
         align-items: center;
         overflow-y: auto; /* 允许垂直滚动 */
         z-index: 1001; /* 确保在 imageView 之上 */
+        display: none; /* 初始时隐藏容器 */
     `;
 
     // 添加点击事件监听器，点击容器外部关闭预览
@@ -300,21 +360,52 @@ function openArchivePreview(archiveName) {
                 return;
             }
             const imageList = data;
-            imageList.forEach(imageName => {
-                const imageElement = document.createElement('img');
-                imageElement.src = `/${archiveName}/${imageName}`;
-                imageElement.style.cssText = `
-                    width: 150px;
-                    height: 200px;
-                    object-fit: cover;
-                    margin: 5px;
-                    cursor: pointer;
-                `;
+
+            displayGridPreview(archiveName, imageList, previewContainer, savedReadingMode);
+        })
+        .catch(error => {
+            previewContainer.innerHTML = `<p>加载图片列表失败。</p>`;
+        });
+}
+
+//函数：显示网格预览（单页、双页、日漫）
+function displayGridPreview(archiveName, imageList, previewContainer, savedReadingMode) {
+    // 使用 Promise.all 等待所有图片加载完成
+    const imagePromises = imageList.map(imageName => {
+        return new Promise(resolve => {
+            const imageElement = document.createElement('img');
+            imageElement.src = `/${archiveName}/${imageName}`;
+
+            // 添加 onload 事件来获取图片的实际尺寸，并应用样式
+            imageElement.onload = function() {
+                const width = this.naturalWidth;
+                const height = this.naturalHeight;
+
+                // 设置最大宽度和最大高度
+                const maxWidth = 150;
+                const maxHeight = 200;
+
+                // 计算缩放比例
+                let ratio = 1;
+                if (width > maxWidth) {
+                    ratio = maxWidth / width;
+                }
+                if (height * ratio > maxHeight) {
+                    ratio = maxHeight / height;
+                }
+
+                // 应用缩放后的尺寸
+                const scaledWidth = width * ratio;
+                const scaledHeight = height * ratio;
+
+                this.style.width = `${scaledWidth}px`;
+                this.style.height = `${scaledHeight}px`;
+                this.style.objectFit = 'cover'; // 保持比例，超出部分裁剪
+                this.style.margin = '5px';
+                this.style.cursor = 'pointer';
+
                 imageElement.addEventListener('click', (event) => {
                     event.stopPropagation();
-                    // 从 localStorage 中读取阅读模式
-                    const savedReadingMode = localStorage.getItem('readingMode') || 'single'; // 默认值为 'single'
-
                     const imagePath = archiveName;
                     // 获取预览容器
                     const previewContainer = document.getElementById('archivePreviewContainer');
@@ -326,11 +417,24 @@ function openArchivePreview(archiveName) {
                         previewContainer.style.display = 'flex';
                     });
                 });
+
                 previewContainer.appendChild(imageElement);
-            });
+                resolve(); // 图片加载完成，resolve Promise
+            };
+            imageElement.onerror = () => {
+                console.error(`Failed to load image: ${imageName}`);
+                resolve(); // 加载失败也 resolve，避免 Promise.all 卡住
+            };
+        });
+    });
+
+    // 等待所有图片加载完成后再显示预览容器
+    Promise.all(imagePromises)
+        .then(() => {
+            previewContainer.style.display = 'flex'; // 显示预览容器
         })
         .catch(error => {
-            previewContainer.innerHTML = `<p>加载图片列表失败。</p>`;
+            console.error("Error loading images:", error);
         });
 }
 
@@ -347,12 +451,8 @@ function getParentPath(path) {
     }
     parts.pop(); // 移除最后一项
     const parentPath = parts.join('/');
-    return parentPath ? parentPath : './Archive';  // 如果有父路径，则返回父路径，否则返回根目录
+    return parentPath ? parentPath : './Archive';  // 如果有父路径，则返回根目录
 }
-
-
-
-
 
 // 导出函数
 export { loadArchive };
