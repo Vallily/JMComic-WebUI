@@ -18,4 +18,4 @@ app.logger.setLevel(logging.DEBUG) #设置flask app的logger等级为DEBUG
 # utils.logger = app.logger  # 将 Flask 的 logger 传递给 utils 模块
 
 if __name__ == '__main__':
-    app.run(debug=DEBUG, port=5000) #是否开启debug模式
+    app.run(debug=DEBUG, port=5000, host='0.0.0.0') #是否开启debug模式
